@@ -32,7 +32,7 @@ const Login = () => {
         try {
             const email = form.getValues("email")
             const password = form.getValues("password")
-            const response = await fetch("http://localhost:4000/signin", {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/signin`, {
                 method: "POST",
                 body: JSON.stringify({ email: email, password: password }),
                 credentials: 'include',
@@ -61,7 +61,7 @@ const Login = () => {
     };
 
     const handleGoogleLogin = async () => {
-        const response = await fetch("http://localhost:4000/login/google", {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google`, {
             method: "GET",
             credentials: 'include',
             headers: {

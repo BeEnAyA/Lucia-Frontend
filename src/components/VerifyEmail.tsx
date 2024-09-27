@@ -13,7 +13,7 @@ const VerifyEmail = () => {
     useEffect(() => {
         console.log(token)
         const verifyEmail = async () => {
-            const response = await fetch(`http://localhost:4000/verify-email/${token}`,
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/verify-email/${token}`,
                 {
                     method: "GET",
                     credentials: "include",
@@ -41,7 +41,7 @@ const VerifyEmail = () => {
     }, [])
 
     const handleResendVerificationLink = async () => {
-        const response = await fetch(`http://localhost:4000/resend-email-verification/${token}`,
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/resend-email-verification/${token}`,
             {
                 method: "GET",
                 credentials: "include",
@@ -87,7 +87,9 @@ const VerifyEmail = () => {
             {isExpired &&
                 <div className="w-[360px] mx-auto py-8 md:py-[3.75rem] space-y-9">
                     <div>
-                        <img src="/Lucia.svg" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        <Link to={"/"}>
+                            <img src="/Lucia.svg" alt="logo" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        </Link>
                     </div>
                     <div className="space-y-6">
                         <div className="space-y-2">
@@ -104,7 +106,9 @@ const VerifyEmail = () => {
             {isInvalid &&
                 <div className="w-[360px] mx-auto py-8 md:py-[3.75rem] space-y-9">
                     <div>
-                        <img src="/Lucia.svg" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        <Link to={"/"}>
+                            <img src="/Lucia.svg" alt="logo" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        </Link>
                     </div>
                     <div className="space-y-6">
                         <div className="space-y-2">

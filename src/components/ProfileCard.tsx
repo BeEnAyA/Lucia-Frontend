@@ -17,7 +17,7 @@ const ProfileCard = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch('http://localhost:4000/get-user-details', {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/get-user-details`, {
                     method: 'GET',
                     credentials: "include"
                 });

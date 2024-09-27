@@ -25,7 +25,7 @@ function ResetPassword() {
     const onSubmit = async () => {
         const password = form.getValues("password")
 
-        const response = await fetch(`http://localhost:4000/reset-password/${token}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/reset-password/${token}`, {
             method: "POST",
             body: JSON.stringify({ password }),
             headers: {
@@ -86,7 +86,9 @@ function ResetPassword() {
             {isReset &&
                 <div className="w-[360px] mx-auto space-y-9 bg-background py-8 md:py-[3.75rem]">
                     <div>
-                        <img src="/Lucia.svg" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        <Link to={"/"}>
+                            <img src="/Lucia.svg" alt="logo" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        </Link>
                     </div>
                     <div className="space-y-6">
                         <div className="space-y-2">
@@ -104,7 +106,9 @@ function ResetPassword() {
                 <div>
                     <div className="w-[360px] mx-auto py-8 md:py-[3.75rem] space-y-9">
                         <div>
-                            <img src="/Lucia.svg" alt="Logo" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                            <Link to={"/"}>
+                                <img src="/Lucia.svg" alt="logo" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                            </Link>
                         </div>
                         <div className="space-y-6">
                             <div className="space-y-2">
@@ -123,7 +127,9 @@ function ResetPassword() {
             {isInvalid &&
                 <div className="w-[360px] mx-auto py-8 md:py-[3.75rem] space-y-9">
                     <div>
-                        <img src="/Lucia.svg" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        <Link to={"/"}>
+                            <img src="/Lucia.svg" alt="logo" className='h-8 dark:saturate-0 dark:brightness-50 dark:invert' />
+                        </Link>
                     </div>
                     <div className="space-y-6">
                         <div className="space-y-2">

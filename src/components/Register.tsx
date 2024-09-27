@@ -34,7 +34,7 @@ const Register = () => {
 
     const onSubmit = async () => {
 
-        const response = await fetch('http://localhost:4000/signup', {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/signup`, {
             method: "POST",
             body: JSON.stringify({ name, email, password }),
             credentials: "include",
