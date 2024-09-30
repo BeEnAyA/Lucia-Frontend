@@ -26,9 +26,10 @@ function GoogleCallback() {
                 if (response.ok) {
                     setIsAuthenticated(true);
                     navigate("/");
-                    console.log(responseData.data)
                     alert(responseData.message);
-                } else {
+                    return
+                }
+                if (response.status >= 400) {
                     alert(responseData.message);
                     navigate("/login")
                 }
