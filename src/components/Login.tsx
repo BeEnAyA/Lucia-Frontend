@@ -1,4 +1,4 @@
-import { Eye, GoogleChrome } from "@untitled-ui/icons-react";
+import { Eye, GoogleChrome, Loading01 } from "@untitled-ui/icons-react";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
@@ -13,13 +13,14 @@ import {
     FormLabel,
     FormMessage,
 } from "./ui/form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/authContext";
 
 const Login = () => {
     const navigate = useNavigate();
     const { setIsAuthenticated } = useAuth()
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const form = useForm({
         resolver: zodResolver(LoginSchema),
         defaultValues: {
@@ -30,6 +31,7 @@ const Login = () => {
 
     const onSubmit = async () => {
         try {
+            setIsLoading(true);
             const email = form.getValues("email")
             const password = form.getValues("password")
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/signin`, {
@@ -42,8 +44,9 @@ const Login = () => {
             })
             const data = await response.json();
             if (response.ok) {
-                setIsAuthenticated(true);
                 form.reset();
+                setIsAuthenticated(true);
+                setIsLoading(false)
                 navigate("/")
                 return alert(data.message);
             }
@@ -51,12 +54,16 @@ const Login = () => {
                 if (data.redirectTo) {
                     navigate("/verify-email")
                 }
+                setIsLoading(false)
                 setIsAuthenticated(false)
                 return alert(data.message);
             }
 
         } catch (error) {
+            setIsLoading(false)
             alert("Oops! Something went wrong")
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -102,11 +109,7 @@ const Login = () => {
                         <div className="space-y-5">
                             <div className="space-y-4">
                                 <Form {...form}>
-                                    <form
-                                        onSubmit={form.handleSubmit(onSubmit)}
-                                        className="space-y-4"
-                                        ref={formRef}
-                                    >
+                                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" ref={formRef}>
                                         <FormField
                                             control={form.control}
                                             name="email"
@@ -159,12 +162,15 @@ const Login = () => {
                             </div>
 
                             <div>
-                                <Button
-                                    className="w-full py-[0.625rem] px-[0.875rem]"
-                                    onClick={() => form.handleSubmit(onSubmit)()}
-                                >
-                                    Sign In
-                                </Button>
+                                {isLoading ?
+                                    <Button className="w-full py-[0.625rem] px-[0.875rem]">
+                                        <Loading01 className="h-6 animate-spin" />
+                                    </Button>
+                                    :
+                                    <Button className="w-full py-[0.625rem] px-[0.875rem]" onClick={() => form.handleSubmit(onSubmit)()}>
+                                        Sign In
+                                    </Button>
+                                }
                             </div>
                             <div className="flex items-center justify-center w-full">
                                 <hr className="flex-1 border-t" />

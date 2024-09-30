@@ -39,7 +39,7 @@ const ProfileCard = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:4000/logout', {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/logout`, {
                 method: 'GET',
                 credentials: "include"
             });
