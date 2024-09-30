@@ -13,7 +13,7 @@ function GoogleCallback() {
 
 
             try {
-                const response = await fetch("http://localhost:4000/login/google/callback", {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google/callback`, {
                     method: 'POST',
                     body: JSON.stringify({ state: state, code: code }),
                     credentials: 'include',
