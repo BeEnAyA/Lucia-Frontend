@@ -15,6 +15,7 @@ import { useRef, useState } from "react";
 import { RegisterSchema } from "@/schema/register";
 import { Link } from "react-router-dom";
 
+import { handleGoogleLogin } from "./Login";
 
 
 const Register = () => {
@@ -149,7 +150,7 @@ const Register = () => {
                                     <hr className="flex-1 border-t" />
                                 </div>
                                 <div className="">
-                                    <Button variant={"outline"} className="w-full text-foreground gap-[0.375rem]  py-[0.625rem] px-[0.875rem]">
+                                    <Button variant={"outline"} className="w-full text-foreground gap-[0.375rem]  py-[0.625rem] px-[0.875rem]" onClick={() => handleGoogleLogin()}>
                                         <GoogleChrome />
                                         Continue with Google
                                     </Button>

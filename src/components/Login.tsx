@@ -17,6 +17,25 @@ import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/authContext";
 
+
+export const handleGoogleLogin = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google`, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    const data = await response.json()
+    console.log(data)
+    if (response.ok) {
+        return window.open(data.url, '_self');
+    }
+    if (response.status >= 400) {
+        return window.alert(data.message)
+    }
+}
+
 const Login = () => {
     const navigate = useNavigate();
     const { setIsAuthenticated } = useAuth()
@@ -66,24 +85,6 @@ const Login = () => {
             setIsLoading(false)
         }
     };
-
-    const handleGoogleLogin = async () => {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-        const data = await response.json()
-        console.log(data)
-        if (response.ok) {
-            return window.open(data.url, '_self');
-        }
-        if (response.status >= 400) {
-            return window.alert(data.message)
-        }
-    }
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -188,7 +189,6 @@ const Login = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 
