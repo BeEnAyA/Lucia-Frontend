@@ -4,12 +4,13 @@ import { useGoogleOneTapLogin } from "@react-oauth/google"
 import { useAuth } from "@/context/authContext";
 
 
+
 function Hero() {
     const navigate = useNavigate();
     const { setIsAuthenticated } = useAuth();
+
     useGoogleOneTapLogin({
         onSuccess: async credentialResponse => {
-            console.log(credentialResponse)
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google/callback`, {
                     method: 'POST',
@@ -40,6 +41,9 @@ function Hero() {
             alert("Couldn't connect to Google")
         },
     })
+
+
+
     return (
         <div className="min-w-screen py-8 sm:py-[3.75rem]">
             <div className="mx-auto flex max-w-screen-xl flex-col justify-between gap-14 px-5 sm:gap-20 sm:px-6 lg:flex-row">

@@ -10,7 +10,7 @@ import Register from './components/Register.tsx';
 import ForgotPassword from './components/ForgotPassword.tsx';
 import { AuthProvider } from './context/authContext.tsx';
 import App from './App.tsx';
-import GoogleCallback from './assets/services/googleCallback.tsx';
+import GoogleCallback from './services/googleCallback.tsx';
 import VerifyEmail from './components/VerifyEmail.tsx';
 import ResetPassword from './components/ResetPassword.tsx';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <GoogleOAuthProvider clientId="675913264011-4g2d47mdgiq0sljm1rnotm32m4sh096b.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <RouterProvider router={router} />
       </GoogleOAuthProvider>
     </AuthProvider>

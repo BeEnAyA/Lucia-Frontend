@@ -1,4 +1,4 @@
-import { ProtectedRoute } from "./assets/services/protectedRoute";
+import { ProtectedRoute } from "./services/protectedRoute";
 import Hero from "./components/Hero"
 import ProfileCard from "./components/ProfileCard";
 import { useAuth } from "./context/authContext"

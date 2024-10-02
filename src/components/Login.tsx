@@ -16,6 +16,7 @@ import {
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/authContext";
+import useGoogleLogin from "@/services/googleOneTapLogin";
 
 
 export const handleGoogleLogin = async () => {
@@ -37,6 +38,7 @@ export const handleGoogleLogin = async () => {
 }
 
 const Login = () => {
+    useGoogleLogin();
     const navigate = useNavigate();
     const { setIsAuthenticated } = useAuth()
     const [isLoading, setIsLoading] = useState<boolean>(false);

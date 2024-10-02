@@ -16,9 +16,11 @@ import { RegisterSchema } from "@/schema/register";
 import { Link } from "react-router-dom";
 
 import { handleGoogleLogin } from "./Login";
+import useGoogleLogin from "@/services/googleOneTapLogin";
 
 
 const Register = () => {
+    useGoogleLogin();
     const registrationForm = useForm({
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
