@@ -1,7 +1,45 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from "./ui/button"
+import { useGoogleOneTapLogin } from "@react-oauth/google"
+import { useAuth } from "@/context/authContext";
+
 
 function Hero() {
+    const navigate = useNavigate();
+    const { setIsAuthenticated } = useAuth();
+    useGoogleOneTapLogin({
+        onSuccess: async credentialResponse => {
+            console.log(credentialResponse)
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google/callback`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: JSON.stringify({ idToken: credentialResponse.credential }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const responseData = await response.json();
+                if (response.ok) {
+                    setIsAuthenticated(true);
+                    navigate("/");
+                    alert(responseData.message);
+                    return
+                }
+                if (response.status >= 400) {
+                    alert(responseData.message);
+                    navigate("/login")
+                }
+            } catch (error) {
+                alert("An error occurred. Please try again.");
+            }
+
+        },
+        onError: () => {
+            alert("Couldn't connect to Google")
+        },
+    })
     return (
         <div className="min-w-screen py-8 sm:py-[3.75rem]">
             <div className="mx-auto flex max-w-screen-xl flex-col justify-between gap-14 px-5 sm:gap-20 sm:px-6 lg:flex-row">

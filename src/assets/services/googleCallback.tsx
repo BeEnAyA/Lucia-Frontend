@@ -10,8 +10,6 @@ function GoogleCallback() {
             const params = new URLSearchParams(window.location.search);
             const state = params.get('state');
             const code = params.get('code');
-
-
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login/google/callback`, {
                     method: 'POST',
