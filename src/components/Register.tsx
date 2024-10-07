@@ -1,4 +1,4 @@
-import { Eye, GoogleChrome } from "@untitled-ui/icons-react";
+import { Eye, EyeOff, GoogleChrome } from "@untitled-ui/icons-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
@@ -33,10 +33,14 @@ const Register = () => {
     const email = registrationForm.getValues("email");
     const password = registrationForm.getValues("password");
 
+    const [show, setShow] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
 
-    const onSubmit = async () => {
+    const togglePassword = () => {
+        setShow(!show);
+    }
 
+    const onSubmit = async () => {
         const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/signup`, {
             method: "POST",
             body: JSON.stringify({ name, email, password }),
@@ -118,8 +122,13 @@ const Register = () => {
                                                     <FormLabel>Password </FormLabel>
                                                     <FormControl>
                                                         <div className="relative">
-                                                            <Input {...field} type="password" autoComplete='new-password' className="w-full" />
-                                                            <Eye className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                            <Input {...field} type={show ? "text" : "password"} autoComplete='new-password' className="w-full" />
+                                                            {
+                                                                show ?
+                                                                    <EyeOff onClick={togglePassword} className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                                    :
+                                                                    <Eye onClick={togglePassword} className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                            }
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />

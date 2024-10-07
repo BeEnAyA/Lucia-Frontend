@@ -7,10 +7,12 @@ import { useRef, useState } from "react";
 import { z } from "zod";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ResetPasswordSchema } from "@/schema/resetpasswordschema";
+import { Eye, EyeOff } from "@untitled-ui/icons-react";
 
 function ResetPassword() {
     const navigate = useNavigate();
     const { token } = useParams();
+    const [show, setShow] = useState(false);
     const [isReset, setIsReset] = useState(false);
     const [isExpired, setIsExpired] = useState(false)
     const [isInvalid, setIsInvalid] = useState(false);
@@ -21,6 +23,10 @@ function ResetPassword() {
             password: "",
         },
     })
+
+    const togglePassword = () => {
+        setShow(!show);
+    }
 
     const onSubmit = async () => {
         const password = form.getValues("password")
@@ -68,7 +74,15 @@ function ResetPassword() {
                                         <FormItem>
                                             <FormLabel>New Password</FormLabel>
                                             <FormControl>
-                                                <Input {...field} type="password" />
+                                                <div className="relative">
+                                                    <Input {...field} type={show ? "text" : "password"} autoComplete='new-password' className="w-full" />
+                                                    {
+                                                        show ?
+                                                            <EyeOff onClick={togglePassword} className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                            :
+                                                            <Eye onClick={togglePassword} className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                    }
+                                                </div>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

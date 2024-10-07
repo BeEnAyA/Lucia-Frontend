@@ -1,4 +1,4 @@
-import { Eye, GoogleChrome, Loading01 } from "@untitled-ui/icons-react";
+import { Eye, EyeOff, GoogleChrome, Loading01 } from "@untitled-ui/icons-react";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
@@ -41,6 +41,7 @@ const Login = () => {
     useGoogleLogin();
     const navigate = useNavigate();
     const { setIsAuthenticated } = useAuth()
+    const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const form = useForm({
         resolver: zodResolver(LoginSchema),
@@ -49,6 +50,10 @@ const Login = () => {
             password: "",
         },
     });
+
+    const togglePassword = () => {
+        setShow(!show);
+    }
 
     const onSubmit = async () => {
         try {
@@ -140,8 +145,14 @@ const Login = () => {
                                                     </FormLabel>
                                                     <FormControl>
                                                         <div className="relative">
-                                                            <Input {...field} type="password" className="w-full" />
-                                                            <Eye className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                            <Input {...field} type={show ? "text" : "password"} className="w-full" />
+                                                            {
+                                                                show ?
+                                                                    <EyeOff onClick={togglePassword} className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                                    :
+                                                                    <Eye onClick={togglePassword} className="absolute inset-y-2 right-4 text-muted-foreground" />
+                                                            }
+
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />
